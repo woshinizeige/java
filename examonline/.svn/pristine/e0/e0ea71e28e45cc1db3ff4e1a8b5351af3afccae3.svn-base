@@ -1,0 +1,9 @@
+package com.zei.dao;
+
+import com.zei.entity.Manager;
+import com.zei.entity.Test;
+
+public interface ManagerDao {
+	public Manager Findmanager(Manager mg);
+			public void addti(Test t);
+}

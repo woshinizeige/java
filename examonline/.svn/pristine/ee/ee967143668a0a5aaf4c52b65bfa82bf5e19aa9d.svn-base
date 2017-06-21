@@ -1,0 +1,64 @@
+<%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
+<%
+String path = request.getContextPath();
+String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
+%>
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+  <head>
+    <base href="<%=basePath%>">
+    
+    <title>修改密码</title>
+    
+	<meta http-equiv="pragma" content="no-cache">
+	<meta http-equiv="cache-control" content="no-cache">
+	<meta http-equiv="expires" content="0">    
+	<meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
+	<meta http-equiv="description" content="This is my page">
+	<!--
+	<link rel="stylesheet" type="text/css" href="styles.css">
+	-->
+	<script type="text/javascript" src="jquery-3.0.0.min.js"></script>
+  </head>
+  
+  <body>
+    <form action="" method="post">
+    <input name="oldpassword" placeholder="请输入原密码"><br>
+    <input name="newpassword1" placeholder="请输入新密码"><br>
+    <input name="newpassword2" placeholder="请再次输入新密码"><br>
+    <input type="hidden" value="${stu.password}">
+    <input type="submit" value="修改密码">
+    </form>
+  </body>
+</html>
+<script>
+	$("[name='oldpassword']").blur(function(){
+		var oldp=$(this).val();
+		var oldp1=$("[type='hidden']").val();
+		alert(oldp);
+		if(oldp==""){
+			alert("原密码不能为空！");
+		}else if(oldp!=oldp1){
+			alert("原密码输入有误！");
+		}
+	})
+	$("[name='newpassword1']").blur(function(){
+		var newp1=$(this).val();
+		if(""==newp1){
+			alert("新密码不能为空！");
+		}
+	})
+	$("[name='newpassword2']").blur(function(){
+		var newp2=$(this).val();
+		if(""==newp2){
+			alert("新密码不能为空！");
+		}
+	})
+	$("[value='修改密码']").click(function(){
+		confirm("是否确认修改密码");
+	})
+	
+
+
+</script>

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zei.dao.StudentDao">
+
+	<select id="stuLogin" resultType="com.zei.entity.Student" parameterType="com.zei.entity.Student">
+		select * from student where name=#{name} and password=#{password}
+	</select>
+	<select id="getTest" resultType="com.zei.entity.Test">
+		<![CDATA[select * from(select * from TEST order by dbms_random.value)where rownum<=10 ]]>
+	</select>
+	<select id="getAnswer" resultType="java.lang.String">
+		select answer from test where testid=#{testid}
+	</select>
+	<select id="addexam" parameterType="com.zei.entity.Exam">
+		insert into exam values(id_seq.nextval,#{stu.studentid},#{point},#{examtime})
+	</select>
+	<select id="lookexam" resultType="com.zei.entity.Exam">
+		select * from exam where stuid=#{stu.studentid}
+	</select>
+	<select id="updatepsw" parameterType="com.zei.entity.Student">
+		update student set password=#{password} where studentid=#{studentid}
+	</select>
+</mapper>

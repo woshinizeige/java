@@ -1,0 +1,26 @@
+package com.zei.service.impl;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.zei.dao.ManagerDao;
+import com.zei.entity.Manager;
+import com.zei.entity.Test;
+import com.zei.service.ManagerService;
+
+@Service
+public class ManagerServiceImpl implements ManagerService {
+
+	@Autowired
+	ManagerDao md;
+
+	@Override
+	public Manager Findmanager(Manager m) {
+		return md.Findmanager(m);
+	}
+
+	@Override
+	public void add(Test t) {
+		md.addti(t);
+	}
+}

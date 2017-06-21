@@ -1,0 +1,43 @@
+<%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
+<%
+String path = request.getContextPath();
+String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
+%>
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+  <head>
+    <base href="<%=basePath%>">
+    
+    <title>My JSP 'add.jsp' starting page</title>
+    
+	<meta http-equiv="pragma" content="no-cache">
+	<meta http-equiv="cache-control" content="no-cache">
+	<meta http-equiv="expires" content="0">    
+	<meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
+	<meta http-equiv="description" content="This is my page">
+	<!--
+	<link rel="stylesheet" type="text/css" href="styles.css">
+	-->
+
+  </head>
+  
+  <body>
+  <form action="Addtitle" method="post">
+   题目内容<input type="text" name="title"><br>
+   A选项<input type="text" name="optiona"><br>
+   B选项<input type="text" name="optionb"><br>
+   C选项<input type="text" name="optionc"><br>
+   D选项<input type="text" name="optiond"><br>
+   正确答案选项<select name="answer">
+   	<option value="A">A</option>
+   <option value="B">B</option>
+   <option value="C">C</option>
+   <option value="D">D</option>
+   </select><br>
+   答案解析<input type="text" name="parse"><br>
+   <input type="submit" value="提交">
+   </form>
+  <a href="Manager/login.jsp">返回</a>
+  </body>
+</html>

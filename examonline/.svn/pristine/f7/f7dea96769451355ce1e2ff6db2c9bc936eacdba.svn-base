@@ -1,0 +1,92 @@
+package com.zei.controller;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+import com.zei.entity.Manager;
+import com.zei.entity.Student;
+import com.zei.entity.Test;
+import com.zei.service.ManagerService;
+import com.zei.service.StudentService;
+
+@Controller
+public class EolController {
+
+	@Autowired
+	ManagerService ms;
+	@Autowired
+	StudentService ss;
+
+	/*登录验证*/
+	@RequestMapping("/login")
+	public String login(String name, String password, int state,HttpServletRequest req) {
+		/*state == 1即为管理员登录*/
+		if (state == 1) {
+			Manager m = new Manager();
+			m.setName(name);
+			m.setPassword(password);
+			Manager mm=ms.Findmanager(m);
+			if(null!=mm){
+				req.getSession().setAttribute("manname", name);
+				return "Manager/login.jsp";				
+			}else{
+				return "index.jsp";
+			}
+			
+		} else {
+			/*学生登录验证*/
+			Student s=new Student();
+			s.setName(name);
+			s.setPassword(password);
+			Student stu=ss.stuLogin(s);
+			/*有这个学生对象则去抽取题目，开始考试*/
+			if(null!=stu){
+				req.getSession().setAttribute("stu", stu);
+				return "test";
+			}else{
+				return "index.jsp";
+			}
+		}
+		
+	}
+	
+	@RequestMapping("/Addtitle")
+	public String addt(Test t){
+		ms.add(t);
+		return "Manager/login.jsp";
+				
+	}
+	
+	/*登录成功后随机抽取题目*/
+	@RequestMapping("/test")
+	public String getTest(HttpServletRequest req){
+		List<Test> list=ss.getTest();        //得到题目列表
+		req.getSession().setAttribute("testlist", list);    //将题目集合存在Session中
+		return "Student/exam.jsp";		
+	}
+	
+	/*提交试卷后算总分*/
+	@RequestMapping("/submitpage")
+	public String getpoint(int[] testid, HttpServletRequest req){
+		int total=0;
+		for(int i=0;i<testid.length;i++){
+			String answer=req.getParameter("answer"+i);
+			String rightAnswer=ss.getAnswer(testid[i]);
+			if(answer.equals(rightAnswer.trim())){
+				total+=10;
+			}
+		}
+		SimpleDateFormat spdf=new SimpleDateFormat("yyyy-MM-dd HH:mm");
+		req.getSession().setAttribute("testtime", spdf.format(new Date()));
+		req.getSession().setAttribute("total", total);
+		return "Student/showpoint.jsp";
+	}
+}

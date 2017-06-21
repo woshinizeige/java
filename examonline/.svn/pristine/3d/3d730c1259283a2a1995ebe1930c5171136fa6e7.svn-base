@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zei.dao.ManagerDao">
+	<select id="Findmanager" resultType="com.zei.entity.Manager"
+		parameterType="com.zei.entity.Manager">
+		select * from MANAGER where name=#{name} and
+		password=#{password}
+	</select>
+
+	<select id="stuLogin" resultType="com.zei.entity.Student"
+		parameterType="com.zei.entity.Student">
+		select * from student where name=#{name} and
+		password=#{password}
+	</select>
+
+	<select id="addti" parameterType="com.zei.entity.Test">
+		insert into TEST
+		values(ID_SEQ.nextval,#{title},#{optiona},#{optionb},#{optionc},#{optiond},#{answer},#{parse})
+	</select>
+
+	<select id="getall" resultType="com.zei.entity.Test"
+		parameterType="com.zei.entity.Test">
+		select * from(select t.*,rownum r from Test t)s where r
+		between (#{pagesize}-1)*5+1 and (5*#{pagesize})
+	</select>
+
+	<select id="getsize" resultType="int">
+		select count(*) from Test
+	</select>
+
+	<select id="findid" resultType="com.zei.entity.Test" parameterType="int">
+		select * from Test where testid=#{testid}
+	</select>
+
+	<select id="TestUpdate" parameterType="com.zei.entity.Test">
+		update Test set
+		title=#{title},optiona=#{optiona},optionb=#{optionb},optionc=#{optionc},optiond=#{optiond},answer=#{answer},parse=#{parse}
+		where testid=#{testid}
+	</select>
+	
+	<select id="TestDelete" parameterType="int">
+		delete from Test where testid=#{testid}
+	</select>
+</mapper>
+

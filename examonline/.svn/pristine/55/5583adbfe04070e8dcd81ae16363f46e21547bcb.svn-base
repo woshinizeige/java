@@ -1,0 +1,9 @@
+package com.zei.service;
+
+import com.zei.entity.Manager;
+import com.zei.entity.Test;
+
+public interface ManagerService {
+	public Manager Findmanager(Manager m);
+		public void add(Test t);
+}

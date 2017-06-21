@@ -1,0 +1,12 @@
+package com.zei.service;
+
+import java.util.List;
+
+import com.zei.entity.Student;
+import com.zei.entity.Test;
+
+public interface StudentService {
+	public Student stuLogin(Student stu);   //学生登录验证
+	public List<Test> getTest();            //随机获得题目
+	public String getAnswer(int id);          //通过题目ID去查询答案
+}

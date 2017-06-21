@@ -1,0 +1,54 @@
+package com.zei.controller;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+import com.zei.entity.Exam;
+import com.zei.entity.Student;
+import com.zei.entity.Test;
+import com.zei.service.StudentService;
+
+@Controller
+public class StudentController {
+	@Autowired
+	StudentService ss;
+	
+	/*修改密码*/
+	@RequestMapping("/updatepsw")
+	public String updatepsw(String oldpassword,String newpassword1,String newpassword2,HttpServletRequest req,Model m){
+		//返回页面的提示信息
+		String error=null;
+		//得到当前登录的学生对象
+		Student stu=(Student)req.getSession().getAttribute("stu");
+		if(null==oldpassword){
+			error="原密码输入为空，修改失败！";
+		}else if(!oldpassword.equals(stu.getPassword())){
+			error="原密码输入有误，修改失败！";
+		}else if(null==newpassword1||null==newpassword2){
+			error="新密码输入为空，修改失败！";
+		}else if(!newpassword1.equals(newpassword2)){
+			error="新密码两次输入不一致，修改失败！";
+		}else{
+			/*输入无误后则调用方法修改密码*/
+			stu.setPassword(newpassword1);
+			ss.updatepsw(stu);
+			error="修改成功";
+			m.addAttribute("statu0", 1);
+			m.addAttribute("error", error);
+			return "Student/updatepassword.jsp";
+		}
+		m.addAttribute("statu0", 1);
+		m.addAttribute("error", error);
+		return "Student/updatepassword.jsp";
+		
+	}
+	
+}
